@@ -239,44 +239,44 @@ namespace nuts
         return data_[0];
       }
 
-		  reference x()
-		  {
-		  	return data_[0];
-		  }
+      reference x()
+      {
+        return data_[0];
+      }
 		  
-		  const_reference y() const
-		  {
-		  	return data_[1];
-		  }
+      const_reference y() const
+      {
+        return data_[1];
+      }
 
-		  reference y()
-		  {
-		  	return data_[1];
-		  }
+      reference y()
+      {
+        return data_[1];
+      }
 		  
-		  template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 3>>
-		  const_reference z() const
-		  {
-		  	return data_[2];
-		  }
+      template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 3>>
+      const_reference z() const
+      {
+        return data_[2];
+      }
 
-		  template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 3>>
-		  reference z()
-		  {
-		  	return data_[2];
-		  }
+      template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 3>>
+      reference z()
+      {
+        return data_[2];
+      }
 
-		  template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 4>>
-		  const_reference w() const
-		  {
-		  	return data_[3];
-		  }
+      template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 4>>
+      const_reference w() const
+      {
+        return data_[3];
+      }
 
-		  template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 4>>
-		  reference w()
-		  {
-		  	return data_[3];
-		  }
+      template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 4>>
+      reference w()
+      {
+        return data_[3];
+      }
 
       value_type dot(const vector& other) const
       {
