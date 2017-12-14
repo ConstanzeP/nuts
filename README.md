@@ -1,5 +1,5 @@
 # nuts
-A modern C++ 17 library
+A C++ 17 library which is currently meant for personal education. 
 
 # Author
 Constanze Pfennig

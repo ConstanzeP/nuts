@@ -1,5 +1,5 @@
 //
-// Copyright © 2017 Constanze Pfennig. All rights reserved.
+// Copyright Â© 2017 Constanze Pfennig. All rights reserved.
 //
 
 #pragma once
@@ -23,16 +23,16 @@ namespace nuts
       static_assert(std::is_arithmetic<T>::value && !std::is_same<T, bool>::value, "Invalid type used for scalar vector type.");
 
       using value_type = T;
-      using pointer = T*;
+      using pointer = T * ;
       using const_pointer = const T*;
-      using reference = T&;
+      using reference = T & ;
       using const_reference = const T&;
 
       using array_type = std::array<T, Dimension>;
       using size_type = typename array_type::size_type;
 
       using iterator = typename array_type::iterator;
-      using const_iterator = typename array_type::const_iterator;   
+      using const_iterator = typename array_type::const_iterator;
       using reverse_iterator = typename array_type::reverse_iterator;
       using const_reverse_iterator = typename array_type::const_reverse_iterator;
 
@@ -60,13 +60,13 @@ namespace nuts
       {
         if(this == reinterpret_cast<const vector*>(&other))
           return *this;
-	  
+
         auto it = std::transform(other.begin(), other.end(), data_.begin(), [](const T2& val)
         {
           return static_cast<T>(val);
         });
-        
-        std::fill(it, data_.end(), static_cast<T>(0));   
+
+        std::fill(it, data_.end(), static_cast<T>(0));
         return *this;
       }
 
@@ -80,14 +80,34 @@ namespace nuts
         return data_ == other.data_;
       }
 
+      bool operator!=(const vector& other) const
+      {
+        return data_ != other.data_;
+      }
+
+      bool operator>(const vector& other) const
+      {
+        return data_ > other.data_;
+      }
+
+      bool operator>=(const vector& other) const
+      {
+        return data_ >= other.data_;
+      }
+
+      bool operator<=(const vector& other) const
+      {
+        return data_ <= other.data_;
+      }
+
       template<typename T2, typename = std::enable_if_t<std::is_convertible<T2, T>::value>>
       auto operator+(const vector<T2, Dimension>& other) const
       {
         using result_value_type = decltype(std::declval<T>() + std::declval<T2>());
         using usage_type = vector<result_value_type, Dimension>;
-        
+
         usage_type result;
-        
+
         std::transform(data_.begin(), data_.end(), other.begin(), result.begin(), [](const T& val1, const T2& val2)
         {
           return val1 + val2;
@@ -95,15 +115,15 @@ namespace nuts
 
         return result;
       }
-	  
+
       template<typename T2, typename = std::enable_if_t<std::is_convertible<T2, T>::value>>
       auto operator*(const T2& val) const
       {
         using result_value_type = decltype(std::declval<T>() * std::declval<T2>());
         using usage_type = vector<result_value_type, Dimension>;
-        
+
         usage_type result;
-        
+
         std::transform(data_.begin(), data_.end(), result.begin(), [&val](const T& val1)
         {
           return val1 * val;
@@ -111,13 +131,13 @@ namespace nuts
 
         return result;
       }
-	  
+
       vector& operator*=(const_reference val)
       {
         *this = *this * val;
         return *this;
       }
-	  
+
       template<typename T2, typename = std::enable_if_t<std::is_convertible<T2, T>::value>>
       auto operator-(const vector<T2, Dimension>& other) const
       {
@@ -133,19 +153,19 @@ namespace nuts
 
         return result;
       }
-	  
+
       vector& operator-() const
       {
         *this = *this * -1;
         return *this;
-      }	  
-	  
+      }
+
       vector& operator-=(const vector& other)
       {
         *this = *this - other;
         return *this;
       }
-	  
+
       vector& operator+=(const vector& other)
       {
         *this = *this + other;
@@ -193,7 +213,7 @@ namespace nuts
       {
         return data_.cend();
       }
-	  
+
       reverse_iterator rbegin() noexcept
       {
         return data_.rbegin();
@@ -224,14 +244,19 @@ namespace nuts
         return data_.crend();
       }
 
-      constexpr auto data() noexcept
+      constexpr pointer data() noexcept
       {
         return data_.data();
       }
 
-      constexpr auto data() const noexcept
+      constexpr const_pointer data() const noexcept
       {
         return data_.data();
+      }
+
+      constexpr size_type size() const noexcept
+      {
+        return data_.size();
       }
 
       const_reference x() const
@@ -243,7 +268,7 @@ namespace nuts
       {
         return data_[0];
       }
-		  
+
       const_reference y() const
       {
         return data_[1];
@@ -253,7 +278,7 @@ namespace nuts
       {
         return data_[1];
       }
-		  
+
       template<std::size_t MyDimension = Dimension, typename = std::enable_if_t<MyDimension >= 3>>
       const_reference z() const
       {
@@ -294,7 +319,7 @@ namespace nuts
 
 
     template<typename T, std::size_t Dimension, typename T2, typename = std::enable_if_t<std::is_convertible<T2, T>::value>>
-    auto operator*(const T2& val, const vector<T, Dimension>& vec) 
+    auto operator*(const T2& val, const vector<T, Dimension>& vec)
     {
       return vec * val;
     }
@@ -315,6 +340,14 @@ namespace nuts
 
       return result;
     }
+
+
+    using vector2d = vector<double, 2>;
+    using vector3d = vector<double, 3>;
+    using vector2i = vector<int, 2>;
+    using vector3i = vector<int, 3>;
+    using vector2f = vector<float, 2>;
+    using vector3f = vector<float, 3>;
 
 
     namespace detail
